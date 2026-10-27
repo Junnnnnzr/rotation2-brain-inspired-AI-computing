@@ -1,0 +1,65 @@
+# 优化器
+
+import torch
+import torchvision
+from torch import nn
+from torch.nn import Conv2d, MaxPool2d, Flatten,Linear
+# from torch.utils.tensorboard import SummaryWriter
+
+dataset=torchvision.datasets.CIFAR10(root='./dataset',train=False,transform=torchvision.transforms.ToTensor(),download=True)
+dataloader=torch.utils.data.DataLoader(dataset,batch_size=1)
+
+class sjwl(nn.Module):
+    def __init__(self):
+        super(sjwl,self).__init__()
+        # self.conv1=Conv2d(3,32,5,padding=2,stride=1)
+        # self.maxpool1=MaxPool2d(2)
+        # self.conv2=Conv2d(32,32,5,padding=2,stride=1)
+        # self.maxpool2=MaxPool2d(2)
+        # self.conv3=Conv2d(32,64,5,padding=2,stride=1)
+        # self.maxpool3=MaxPool2d(2)
+        # self.flatten=Flatten()
+        # self.linear1=Linear(1024,64)
+        # self.linear2=Linear(64,10)
+
+        self.model1=nn.Sequential(
+            Conv2d(3,32,5,padding=2,stride=1),
+            MaxPool2d(2),
+            Conv2d(32,32,5,padding=2,stride=1),
+            MaxPool2d(2),
+            Conv2d(32,64,5,padding=2,stride=1),
+            MaxPool2d(2),
+            Flatten(),
+            Linear(1024,64),
+            Linear(64,10)
+        )
+
+    def forward(self,x):
+        # x=self.conv1(x)
+        # x=self.maxpool1(x)
+        # x=self.conv2(x)
+        # x=self.maxpool2(x)
+        # x=self.conv3(x)
+        # x=self.maxpool3(x)
+        # x=self.flatten(x)
+        # x=self.linear1(x)
+        # x=self.linear2(x)
+        x=self.model1(x)
+        return x
+
+loss=nn.CrossEntropyLoss()
+sjwl1=sjwl()
+optim=torch.optim.SGD(sjwl1.parameters(),lr=0.01)
+for epoch in range(20): # 进行20轮学习
+    running_loss=0.0
+    for data in dataloader:
+        imgs,targets=data
+        outputs=sjwl1(imgs)
+        result_loss=loss(outputs,targets)
+        optim.zero_grad() # 参数设置为0
+        result_loss.backward() # 反向传播
+        optim.step() # 根据梯度进行调优
+        # print(result_loss)
+        # result_loss.backward() # 反向传播得到grad
+        running_loss+=result_loss
+    print(running_loss)
