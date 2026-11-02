@@ -125,19 +125,19 @@ SNN 先统计给定时间窗 $T$ 内每个输出神经元的平均发放率，�
 \hat{C} = \arg\max_i \frac{1}{T}\sum_{t=1}^{T}o_i^{t,N}
 ```
 
-其中，$o_i^{t,N}$ 表示第 $N$ 层的第 $i$ 个神经元在第 $t$ 个时间步的输出
+其中，$`o_i^{t,N}`$ 表示第 $`N`$ 层的第 $`i`$ 个神经元在第 $`t`$ 个时间步的输出。
 
 ## 5.2 内存花销
 
-ANN：$M_{\text{ANN}}=M_w+M_a$ 权重内存weight memory + 激活值内存activation memory
+ANN：$`M_{\mathrm{ANN}}=M_w+M_a`$，即权重内存 weight memory + 激活值内存 activation memory。
 
-SNN：$M_{\text{SNN}}=M_w+M_p+M_s$ 权重内存weight memory+ 膜电位内存membrane potential memory+ 脉冲内存 spike memory
+SNN：$`M_{\text{SNN}}=M_w+M_p+M_s`$ 权重内存weight memory+ 膜电位内存membrane potential memory+ 脉冲内存 spike memory
 
-其中，$M_w,M_a,M_p$ 由网络结构决定，$M_s$ 由每个时间戳产生脉冲数决定
+其中，$`M_w,M_a,M_p`$ 由网络结构决定，$`M_s`$ 由每个时间戳产生脉冲数决定
 
 ## 5.3 计算花销
 
-ANN：$C_{\text{ANN}}=C_{mul}+C_{add}$ 计算开销主要由方程中的乘法和加法决定
+ANN：$`C_{\text{ANN}}=C_{mul}+C_{add}`$ 计算开销主要由方程中的乘法和加法决定
 
-SNN：$C_{\text{SNN}}=C_{add}$ 主要来自脉冲输入的这个积分的过程，而积分是事件驱动的，如果没有收到脉冲信号就不会进行计算，因此与脉冲总数有关
+SNN：$`C_{\text{SNN}}=C_{add}`$ 主要来自脉冲输入的这个积分的过程，而积分是事件驱动的，如果没有收到脉冲信号就不会进行计算，因此与脉冲总数有关
 
