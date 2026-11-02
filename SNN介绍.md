@@ -121,9 +121,14 @@ DVS是动态视觉传感器，产生两类时间（ON OFF），因此DVS数据�
 
 SNN 先统计给定时间窗 $T$ 内每个输出神经元的平均发放率，即脉冲率fire rate，再选择发放率最高的神经元作为输出：
 
-$$
-\hat{C}=\arg\max_i\left\{\frac{1}{T}\sum_{t=1}^{T}o_i^{t,N}\right\}
-$$
+```math
+\hat{C}
+=
+\operatorname*{arg\,max}_{i}
+\left\lbrace
+\frac{1}{T}\sum_{t=1}^{T}o_i^{t,N}
+\right\rbrace
+```
 
 其中，$o_i^{t,N}$ 表示第 $N$ 层的第 $i$ 个神经元在第 $t$ 个时间步的输出
 
