@@ -2,14 +2,20 @@
 
 ## 1.1 脉冲神经元
 
-区分于ANN中的“人工神经元”，其计算公式为$y=f\left(\sum_{i=1}^{N}w_ix_i+b\right)$ ，这里N表示突触的数量
+区分于ANN中的“人工神经元”，其计算公式为$`y=f\left(\sum_{i=1}^{N}w_ix_i+b\right)`$ ，这里N表示突触的数量
 
-SNN的计算公式（膜电位方程）：$$
-\tau\frac{V_{mem}(t+\Delta t)-V_{mem}(t)}{\Delta t}
-=-V_{mem}(t)+I(t)R$$
-$$V_{mem}(t+\Delta t)
-=V_{mem}(t)-\frac{\Delta t}{\tau}\left(V_{mem}(t)-I(t)R\right)
-$$
+SNN的计算公式（膜电位方程）:
+```math
+\tau
+\frac{
+V_{\mathrm{mem}}(t+\Delta t)-V_{\mathrm{mem}}(t)
+}{
+\Delta t
+}
+=
+-V_{\mathrm{mem}}(t)+I(t)R
+```
+
 * $V_{mem}(t)$: 时刻t的膜电位
 * $\Delta t$：时间上的小增量，也称为时间步
 * $\tau$：神经元的时间常数，等于RC
@@ -49,16 +55,23 @@ SNN处理的是脉冲数据，因此不能直接把各种形式的原始特征�
 * LTP：如果前神经元在后神经元之前不久发放，连接增强
 * LDP：如果后神经元先发放，连接减弱
 
-通过下式表示权重变化：$$
-\Delta w=\sum_n\sum_m K\left(t_{post}^{m}-t_{pre}^{n}\right)
-$$
-其中：$$
+通过下式表示权重变化：
+```math
+\Delta w
+=
+\sum_n\sum_m
+K\left(
+t_{\mathrm{post}}^m-t_{\mathrm{pre}}^n
+\right)
+```
+其中：
+```math
 K(x)=
 \begin{cases}
-A_+e^{-\frac{x}{\tau_+}}, & x\ge 0\\
--A_-e^{\frac{x}{\tau_-}}, & x<0
+A_+e^{-x/\tau_+}, & x\ge 0 \\
+-A_-e^{x/\tau_-}, & x<0
 \end{cases}
-$$
+```
 A+和A-是正的常数，代表最大的突触增强和减弱
 
 ### 1.3.2 代理梯度
